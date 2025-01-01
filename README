@@ -1,0 +1,6 @@
+Quick Python Project to Automate Generating Customized Cover Letters
+Add headshot.jpg to root "."
+Create a python virtual environment - venv || virtualenv
+active virtual environment
+pip install -r requirements.txt
+python make-cover-letter.py
