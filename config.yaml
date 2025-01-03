@@ -1,0 +1,13 @@
+# Define your body content
+body:
+    - "My journey into programming began with a transition from Pre-Med studies, inspired by a passion for problem-solving and building. Starting as a Junior Developer at a trading application startup, I quickly advanced to roles where I drove significant technical initiatives."
+    - "At a food service startup, I led the migration from JavaScript to TypeScript, enhancing codebase scalability while mentoring teammates. I was lead for the Core Epic team at a municipal bond startup, managing feature development, maintenance, and process automation to optimize efficiency."
+    - "I excel in integrating innovative solutions, such as leveraging React expertise to stabilize a no-code CMS (Plasmic) and automating workflows with Bash scripting and Docker for seamless AWS deployment."
+# relative path to your photo
+photo_path: "./headshot.jpg"
+first: "Andrew"
+last: "Patterson"
+email: "andrew@andrewmpatterson.com"
+phone_number: "623-692-6992"
+           
+

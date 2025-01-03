@@ -1,20 +1,35 @@
 from fpdf import FPDF
 from PIL import Image, ImageOps
+import yaml
+
+with open("config.yaml") as stream:
+    try:
+        yamlObj = yaml.safe_load(stream)
+        global body
+        body = yamlObj.get("body")
+        global photo_path 
+        photo_path = yamlObj.get("photo_path")
+        global first
+        first = yamlObj.get("first")
+        global last
+        last = yamlObj.get("last")
+        global email
+        email = yamlObj.get("email ")
+        global phone_number
+        phone_number = yamlObj.get("phone_number")
+        global applicant_name
+        applicant_name=f'{first} {last}'
+        for value in (body, photo_path): 
+            if value == None:
+                raise KeyError("Config missing keys")
+
+    except yaml.YAMLError as exc:
+        print("config.yaml does not exist or is invalid")
 
 company_name = input("Company Name \n") 
 hiring_manager = input("Hiring Manager \n") 
 job_title= input("Job Title \n")
-journey = "My journey into programming began with a transition from Pre-Med studies, inspired by a passion for problem-solving and building. Starting as a Junior Developer at a trading application startup, I quickly advanced to roles where I drove significant technical initiatives."
-initiatives = "At a food service startup, I led the migration from JavaScript to TypeScript, enhancing codebase scalability while mentoring teammates. I was lead for the Core Epic team at a municipal bond startup, managing feature development, maintenance, and process automation to optimize efficiency."
-skills = "I excel in integrating innovative solutions, such as leveraging React expertise to stabilize a no-code CMS (Plasmic) and automating workflows with Bash scripting and Docker for seamless AWS deployment."
 company_mission = f"I am drawn to {company_name.title()}'s mission and would welcome the opportunity to contribute and build a outstanding product."
-photo_path = "headshot.jpg"
-first="Andrew".title()
-last="Patterson".title()
-applicant_name=f'{first} {last}'
-email="andrew@andrewmpatterson.com"
-phone_number="623-692-6992"
-sections = [journey, initiatives, skills, company_mission]
 
 class PDF(FPDF):
     def create_cover_letter(self):
@@ -27,7 +42,7 @@ class PDF(FPDF):
         self.letter_title()
         self.letter_body()
         self.letter_footer()
-        self.output(f'{first}_{last}_cover_letter.pdf')
+        self.output(f'{first}_{last}_{company_name.replace(" ", "_")}_cover_letter.pdf')
 
     def letter_header(self):
         self.set_fill_color(30, 58, 138)  
@@ -53,7 +68,7 @@ class PDF(FPDF):
         self.set_x(titleOffset)
         self.set_margins(titleOffset,0, 5)
         self.set_font("Arial", "", 12)
-        self.write(10, "My name is "),
+        self.write(10, "My name is ")
         self.set_font("Arial", "B")
         self.write(10, applicant_name)
         self.set_font("Arial", "")
@@ -64,6 +79,7 @@ class PDF(FPDF):
         titleOffset = self.w * 0.2 + 5
         self.set_x(titleOffset)
         self.set_margins(titleOffset,0, 5)
+        sections = body + [company_mission]
         for section in sections:
             self.write(10, section)
             self.ln(15)
